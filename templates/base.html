@@ -14,7 +14,7 @@
   </head>
   <body>
     <nav class="navigation navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Dashboard</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,8 +28,8 @@
               Batch
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Historical</a>
-              <a class="dropdown-item" href="#">Time Series</a>
+              <a class="dropdown-item" href="{% url 'Weatherstack:batch' %}">Historical</a>
+              <a class="dropdown-item" href="{% url 'Weatherstack:time-series' %}">Time Series</a>
             </div>
           </li>
           <li class="nav-item dropdown">
