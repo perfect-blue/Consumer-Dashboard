@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from Weatherstack import forms
-
+from .models import Batch
 # Create your views here.
 def index(request):
     return render(request,'index.html')
@@ -18,7 +18,7 @@ def batch(request):
             cities = batchForm.cleaned_data['cities']
             date = batchForm.cleaned_data['date']
             hour = batchForm.cleaned_data['hour']
-            batch_dict['status']='Weather data from {} has been added to {}'.format(cities,client)
+            batch_dict['status']=Batch.get_historical(client,access_key,cities,date,hour)
             return render(request,'BatchWeather/batch.html',batch_dict)
 
     return render(request,'BatchWeather/batch.html',batch_dict)
