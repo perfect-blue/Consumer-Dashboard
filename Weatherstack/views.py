@@ -24,4 +24,21 @@ def batch(request):
     return render(request,'BatchWeather/batch.html',batch_dict)
 
 def time_series(request):
-    return render(request,'BatchWeather/timeseries.html')
+    time_series_form=forms.TimeSeriesForm()
+    time_series_dict = {'time_series_form':time_series_form}
+    if request.method == 'POST':
+        time_series_form = forms.TimeSeriesForm(request.POST)
+
+        if time_series_form.is_valid():
+           client = time_series_form.cleaned_data['client']
+           access_key = time_series_form.cleaned_data['access_key']
+           cities = time_series_form.cleaned_data['cities']
+           historical_date_start = time_series_form.cleaned_data['historical_date_start']
+           historical_date_end = time_series_form.cleaned_data['historical_date_end']
+           hourly=time_series_form.cleaned_data['hourly']
+           time_series_dict['status']=Batch.get_time_series(client,access_key,cities,historical_date_start,
+                                      historical_date_end,hourly)
+
+           return render(request,'BatchWeather/timeseries.html',time_series_dict)
+
+    return render(request,'BatchWeather/timeseries.html',time_series_dict)
