@@ -28,7 +28,8 @@
               Batch
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{% url 'Weatherstack:batch' %}">Historical</a>
+              <a class="dropdown-item" href="{% url 'Weatherstack:current' %}">Current</a>
+              <a class="dropdown-item" href="{% url 'Weatherstack:batch' %}">Daily</a>
               <a class="dropdown-item" href="{% url 'Weatherstack:time-series' %}">Time Series</a>
             </div>
           </li>

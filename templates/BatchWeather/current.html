@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+  {% block body_block%}
+
+  <div class="jumbotron jumbotron-fluid transparent">
+      <h1 class="display-4">Get Current Weather Data</h1>
+      <p class="lead">Get Current weather data from Weatherstack and save it to HDFS</p>
+  </div>
+
+  <form method="post">
+    {{current_form.as_p}}
+    {% csrf_token %}
+    <input type="submit" class="btn btn-primary" name ='start' value="GET">
+  </form>
+  <p>{{ status }}</p>
+{% endblock %}
