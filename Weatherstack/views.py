@@ -42,3 +42,21 @@ def time_series(request):
            return render(request,'BatchWeather/timeseries.html',time_series_dict)
 
     return render(request,'BatchWeather/timeseries.html',time_series_dict)
+
+def current(request):
+    current_form=forms.CurrentForm()
+    current_dict = {'current_form':current_form}
+
+    if request.method =='POST':
+        current_form = forms.CurrentForm(request.POST)
+
+        if current_form.is_valid():
+            client = current_form.cleaned_data['client']
+            access_key = current_form.cleaned_data['access_key']
+            city = current_form.cleaned_data['city']
+
+            current_dict['status']=Batch.get_current(client,access_key,city)
+
+            return render(request,'BatchWeather/current.html',current_dict)
+
+    return render(request,'BatchWeather/current.html',current_dict)

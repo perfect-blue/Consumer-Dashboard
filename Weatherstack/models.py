@@ -5,6 +5,27 @@ import pandas as pd
 
 class Batch():
 
+    def get_current(client, access_key, city):
+        query = {'access_key':access_key,'query':city}
+        response = requests.get("http://api.weatherstack.com/current?",params=query)
+        if(response.status_code==200):
+            current_file = response.json()
+            try:
+                response = requests.get("http://api.weatherstack.com/current?",params=query)
+
+                current=current_file['current']
+                location=current_file['location']
+                current['location']=location
+
+                current_list=[]
+                current_list.append(current)
+                result = pd.json_normalize(current_list)
+                return 'Current weather data from {} has been added to {}'.format(city,client)
+            except:
+                return current_file['error']['info']
+        else:
+            return '{}. Connection Error'.format(response.status_code)
+
     def get_historical(client,access_key,cities,date,hourly):
         query={'access_key':access_key,'query':cities,
                 'historical_date':date,'hourly':hourly}
@@ -30,8 +51,6 @@ class Batch():
                 return json_file['error']['info']
         else:
             return 'Error. Check Again Your Input'
-
-
 
     def get_time_series(client,access_key,cities,historical_date_start,historical_date_end,hourly):
         query={'access_key':access_key,'query':cities,
