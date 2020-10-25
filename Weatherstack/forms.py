@@ -20,3 +20,8 @@ class CurrentForm(forms.Form):
     client= forms.CharField()
     access_key = forms.CharField()
     city = forms.CharField()
+
+class StreamForm(forms.Form):
+    client = forms.CharField()
+    access_key = forms.CharField()
+    city = forms.CharField()
