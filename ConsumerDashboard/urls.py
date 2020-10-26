@@ -20,5 +20,6 @@ from Weatherstack import views
 urlpatterns = [
     url(r'^$',views.index, name="index"),
     url(r'^Weatherstack/',include('Weatherstack.urls')),
+    url(r'^twitter/',include('twitter.urls')),
     url(r'^admin/',admin.site.urls),
 ]
