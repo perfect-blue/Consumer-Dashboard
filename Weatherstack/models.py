@@ -2,6 +2,7 @@ from django.db import models
 import requests
 import json
 import pandas as pd
+from time import sleep
 
 class Batch():
 
@@ -81,3 +82,10 @@ class Batch():
             return 'Error. Check Again Your Input'
         elif(response.status_code==500):
             return 'Server Error. Please check again Latter'
+
+class Stream():
+    def get_stream_data(client,access_key,city,status):
+        while status==True:
+            print("this is weather data")
+            sleep(2)
+        # return 'Stream weather data from {} has been added to {}'.format(city,client)'

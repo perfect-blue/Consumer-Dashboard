@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+	{% block body_block%}
+	<div class="jumbotron jumbotron-fluid transparent">
+			<h1 class="display-4">Get Twitter Friends</h1>
+			<p class="lead">Get Follower/Following twitter data</p>
+	</div>
+    <!--Bikin form di sini-->
+		<form method="post">
+			{{twitter_form.as_p}}
+			{% csrf_token %}
+			<input type="submit" class="btn btn-primary" name ='start' value="GET">
+		</form>
+		<p>{{ status }}</p>
+	{% endblock %}
