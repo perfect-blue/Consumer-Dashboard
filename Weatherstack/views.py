@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from Weatherstack import forms
 from .models import Batch
-from .models import Stream
 # Create your views here.
 def index(request):
     return render(request,'index.html')
@@ -61,19 +60,3 @@ def current(request):
             return render(request,'BatchWeather/current.html',current_dict)
 
     return render(request,'BatchWeather/current.html',current_dict)
-
-def stream(request):
-    stream_form=forms.StreamForm()
-    stream_dict = {'stream_form':stream_form}
-
-    if request.method =='POST':
-        stream_form = forms.StreamForm(request.POST)
-
-        if stream_form.is_valid():
-           client = stream_form.cleaned_data['client']
-           access_key = stream_form.cleaned_data['access_key']
-           city = stream_form.cleaned_data['city']
-
-           return render(request,'StreamWeather/consumer.html',stream_dict)
-
-    return  render(request,'StreamWeather/producer.html',stream_dict)

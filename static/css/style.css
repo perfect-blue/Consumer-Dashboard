@@ -3,12 +3,12 @@
 }
 
 body{
-  font-family:'Montserrat';
+  font-family: 'Roboto', sans-serif;
 }
 
 .navbar-brand{
-  font-family: "Ubuntu";
-  font-size: 2.5rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 

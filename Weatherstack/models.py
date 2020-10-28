@@ -3,6 +3,7 @@ import requests
 import json
 import pandas as pd
 from time import sleep
+import os
 
 class Batch():
 
@@ -21,7 +22,18 @@ class Batch():
                 current_list=[]
                 current_list.append(current)
                 result = pd.json_normalize(current_list)
-                return 'Current weather data from {} has been added to {}'.format(city,client)
+
+                outname = '{}.csv'.format(str(result['location.localtime'][0]))
+                outdir = client+"\current\{}".format(city)
+                if not os.path.exists(outdir):
+                    os.makedirs(outdir)
+
+                fullname = os.path.join(outdir, outname)
+
+                result.to_csv(fullname,index=False)
+                return 'Current weather data from {} has been added to {}'.format(city,fullname)
+            except IOError:
+                return "Path doesn't right"
             except:
                 return current_file['error']['info']
         else:
@@ -45,9 +57,18 @@ class Batch():
                 result=pd.json_normalize(daily_list,'hourly',
                 ['date','date_epoch','mintemp','maxtemp','avgtemp','totalsnow','sunhour','astro','location'])
 
-                result.to_csv('{}'.format(client),index=False)
-                return 'Daily weather data from {} has been added to {}'.format(cities,client)
+                outname = '{}.csv'.format(date)
+                outdir = client+"\daily\{}".format(cities)
+                if not os.path.exists(outdir):
+                    os.makedirs(outdir)
 
+                fullname = os.path.join(outdir, outname)
+
+                result.to_csv(fullname,index=False)
+                return 'Daily weather data from {} has been added to {}'.format(cities,fullname)
+
+            except IOError:
+                return "Check your path again"
             except:
                 return json_file['error']['info']
         else:
@@ -74,18 +95,21 @@ class Batch():
                 result=pd.json_normalize(ts_list,'hourly',
                 ['date','date_epoch','mintemp','maxtemp','avgtemp','totalsnow','sunhour','astro','location'])
 
-                result.to_csv('{}'.format(client),index=False)
-                return 'Time-series weather data from {} has been added to {}'.format(cities,client)
+
+                outname = '{}_{}.csv'.format(historical_date_start,historical_date_end)
+                outdir = client+"\historical\{}".format(cities)
+                if not os.path.exists(outdir):
+                    os.makedirs(outdir)
+
+                fullname = os.path.join(outdir, outname)
+
+                result.to_csv(fullname,index=False)
+                return 'Time-series weather data from {} has been added to {}'.format(cities,fullname)
+            except IOError:
+                return 'Path doesnt right'
             except:
                 return json_file['error']['info']
         elif(response.status_code==400):
             return 'Error. Check Again Your Input'
         elif(response.status_code==500):
             return 'Server Error. Please check again Latter'
-
-class Stream():
-    def get_stream_data(client,access_key,city,status):
-        while status==True:
-            print("this is weather data")
-            sleep(2)
-        # return 'Stream weather data from {} has been added to {}'.format(city,client)'
